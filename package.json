@@ -1,0 +1,46 @@
+{
+  "name": "promistache",
+  "description": "Promise-based asynchronous Mustache-like templating engine",
+  "version": "0.1.0",
+  "bin": {
+    "promistache": "./bin/promistache.cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/kawanet/promistatche/issues"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.5",
+    "mocha": "^5.1.1",
+    "process.argv": "^0.1.0",
+    "uglify-js": "^3.3.22"
+  },
+  "homepage": "https://github.com/kawanet/promistatche#readme",
+  "jshintConfig": {
+    "globals": {
+      "Promise": true
+    },
+    "mocha": true,
+    "node": true,
+    "undef": true,
+    "unused": true,
+    "validthis": true
+  },
+  "keywords": [
+    "Mustache",
+    "Promise",
+    "hogan.js"
+  ],
+  "license": "MIT",
+  "main": "./lib/promistache.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawanet/promistatche.git"
+  },
+  "scripts": {
+    "fetch-spec": "for spec in comments delimiters interpolation inverted partials sections '~lambdas'; do curl -o \"test/spec/specs/$spec.json\" \"https://rawgit.com/mustache/spec/master/specs/$spec.json\"; done",
+    "fixpack": "fixpack",
+    "jshint": "./node_modules/.bin/jshint .",
+    "mocha": "./node_modules/.bin/mocha test/*.js",
+    "test": "npm run mocha && npm run jshint"
+  }
+}
