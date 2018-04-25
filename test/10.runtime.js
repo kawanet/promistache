@@ -9,7 +9,7 @@ var runtime = require("../lib/promistache").runtime;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
-  runtime(function(G, I, S, U, V) {
+  runtime(function(G, I, P, S, U, V) {
 
     it("text", function() {
       var t = G("Hello, Promistache!");
@@ -102,17 +102,52 @@ describe(TITLE, function() {
     it("lambda", function() {
       var t = G(V("aa.bb"));
 
-      var aa = {bb: bb};
-      var context = {aa: aa};
+      var context = {aa: {bb: bb}};
+      var alt = {alt: 1};
 
-      return t(context).then(function(result) {
+      return t(context, alt).then(function(result) {
         assert.equal(result, "AABB");
       });
 
-      function bb(ctx) {
-        assert.ok(this === aa);
-        assert.ok(ctx === context);
+      function bb(ctx, second) {
+        assert.ok(this, context.aa);
+        assert.ok(ctx, context);
+        assert.ok(second, alt);
         return "AABB";
+      }
+    });
+
+    it("partial", function() {
+      var t = G(["[", V("foo"), ":", P("foo"), "]"]);
+      var context = {foo: "context"};
+      var alt = {foo: foo};
+
+      return t(context, alt).then(function(result) {
+        assert.equal(result, "[context:alt]");
+      });
+
+      function foo(ctx, second) {
+        assert.equal(this, alt);
+        assert.equal(ctx, context);
+        assert.equal(second, alt);
+        return "alt";
+      }
+    });
+
+    it("section and partial", function() {
+      var t = G(["[ ", S("foo", ["[", P("baz"), "]"]), " ]"]);
+      var bar = {};
+      var context = {foo: [bar, bar], baz: "context"};
+      var alt = {baz: baz};
+
+      return t(context, alt).then(function(result) {
+        assert.equal(result, "[ [alt][alt] ]");
+      });
+
+      function baz(ctx, second) {
+        assert.equal(ctx, bar);
+        assert.equal(second, alt);
+        return "alt";
       }
     });
   });

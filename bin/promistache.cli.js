@@ -10,7 +10,7 @@ var Promistache = require("../lib/promistache");
 var CONF = {variable: "templates"};
 var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" FILES\n';
 var PREFIX = 'if (!!!{{variable}}) var {{variable}} = {};\n';
-var LINE = '{{variable}}["{{namespace}}{{name}}"] = function(G,I,S,U,V){return {{{code}}};\n';
+var LINE = '{{variable}}["{{namespace}}{{name}}"] = function(G,I,P,S,U,V){return {{{code}}};\n';
 var SUFFIX = '';
 
 CLI(argv(CONF));

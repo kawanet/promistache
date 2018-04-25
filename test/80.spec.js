@@ -14,6 +14,8 @@ var SKIP_NAME = {
   "Deeply Nested Contexts": 1,
   // this needs standalone line support
   "Doubled": 1,
+  // delimiter change not supported
+  "Post-Partial Behavior": 1,
   // this needs parser in runtime
   "Interpolation - Expansion": 1
 };
@@ -48,8 +50,6 @@ describe(TITLE, function() {
           name.indexOf("Standalone") > -1 ||
           // delimiter change not supported
           template.indexOf("{{=") > -1 ||
-          // partial not supported
-          template.indexOf("{{>") > -1 ||
           // this needs parser in runtime
           (lambda && lambda.indexOf("function(txt)") > -1)) {
 
@@ -57,20 +57,18 @@ describe(TITLE, function() {
         }
 
         it(name, function() {
-          var p, b, t;
+          var t;
           try {
-            p = Promistache.parse(template);
-            b = Function("G", "I", "S", "U", "V", "return " + p);
-            t = Promistache.runtimeSync(b);
+            t = Promistache.compileSync(template);
           } catch (e) {
-            if (p) console.warn(p);
+            console.warn(template);
             return assert.fail(e);
           }
 
           var partial = {};
           if (partials) {
             Object.keys(partials).forEach(function(name) {
-              partial[name] = Promistache.compile(partials[name]);
+              partial[name] = Promistache.compileSync(partials[name]);
             });
           }
 
