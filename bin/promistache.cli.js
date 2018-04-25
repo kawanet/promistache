@@ -8,18 +8,15 @@ var argv = require("process.argv")(process.argv.slice(2));
 var Promistache = require("../lib/promistache");
 
 var CONF = {variable: "templates"};
-var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" FILES\n';
+var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" --trime FILES\n';
 var PREFIX = 'if (!!!{{variable}}) var {{variable}} = {};\n';
 var LINE = '{{variable}}["{{namespace}}{{name}}"] = function(G,I,P,S,U,V){return {{{code}}};\n';
 var SUFFIX = '';
 
 CLI(argv(CONF));
 
-function compile(source) {
-  return Promistache.runtimeSync(Promistache.build(source));
-}
-
 function CLI(context) {
+  var compile = Promistache.compileSync;
   var usageRender = compile(USAGE);
   var prefixRender = compile(PREFIX);
   var lineRender = compile(LINE);
@@ -41,7 +38,8 @@ function CLI(context) {
     var source = fs.readFileSync(file, "utf-8");
 
     context.name = file.split("/").pop().split(".").shift();
-    context.code = Promistache.parse(source);
+    context.code = Promistache.parse(source, context);
+
     result.push(lineRender(context));
   });
 

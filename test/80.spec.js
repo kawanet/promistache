@@ -6,22 +6,28 @@
 
 var assert = require("assert");
 var fs = require("fs");
-var Promistache = require("../lib/promistache");
+var compile = require("../lib/promistache").compileSync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 var SKIP_NAME = {
-  // this is an evil spec
-  "Deeply Nested Contexts": 1,
-  // this needs standalone line support
-  "Doubled": 1,
-  // delimiter change not supported
-  "Post-Partial Behavior": 1,
-  // this needs parser in runtime
-  "Interpolation - Expansion": 1
+  //
+};
+
+var SKIP_DESC = {
+  "A lambda's return value should be parsed.": 1, // evil
+  "All elements on the context stack should be accessible.": 1, // evil
+  "Delimiters set in a partial should not affect the parent template.": 1,
+  "Each line of the partial should be indented before rendering.": 1,
+  "Standalone interpolation should not alter surrounding whitespace.": 1,
+  "Standalone tags should not require a newline to follow them.": 1,
+  "Standalone tags should not require a newline to precede them.": 1,
+  '"\\r\\n" should be considered a newline for standalone tags.': 1
 };
 
 describe(TITLE, function() {
   var SPECS_DIR = __dirname + "/spec/specs";
+
+  var options = {trim: true};
 
   var files = fs.readdirSync(SPECS_DIR).filter(function(f) {
     return f.indexOf(".json") > 0;
@@ -45,9 +51,7 @@ describe(TITLE, function() {
         var template = test.template;
         var lambda = context.lambda && context.lambda.js;
 
-        if (SKIP_NAME[name] ||
-          // standalone line not supported
-          name.indexOf("Standalone") > -1 ||
+        if (SKIP_NAME[name] || SKIP_DESC[desc] ||
           // delimiter change not supported
           template.indexOf("{{=") > -1 ||
           // this needs parser in runtime
@@ -59,7 +63,7 @@ describe(TITLE, function() {
         it(name, function() {
           var t;
           try {
-            t = Promistache.compileSync(template);
+            t = compile(template, options);
           } catch (e) {
             console.warn(template);
             return assert.fail(e);
@@ -68,7 +72,7 @@ describe(TITLE, function() {
           var partial = {};
           if (partials) {
             Object.keys(partials).forEach(function(name) {
-              partial[name] = Promistache.compileSync(partials[name]);
+              partial[name] = compile(partials[name], options);
             });
           }
 
