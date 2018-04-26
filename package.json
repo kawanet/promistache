@@ -2,6 +2,7 @@
   "name": "promistache",
   "description": "Promise-based asynchronous Mustache-like templating engine",
   "version": "0.1.0",
+  "author": "@kawanet",
   "bin": {
     "promistache": "./bin/promistache.cli.js"
   },
