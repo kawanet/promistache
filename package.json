@@ -45,7 +45,6 @@
     "fetch-spec": "for spec in comments delimiters interpolation inverted partials sections '~lambdas'; do curl -o \"test/spec/specs/$spec.json\" \"https://rawgit.com/mustache/spec/master/specs/$spec.json\"; done",
     "fixpack": "fixpack",
     "jshint": "./node_modules/.bin/jshint .",
-    "mocha": "./node_modules/.bin/mocha test/*.js",
-    "test": "npm run mocha && npm run jshint"
+    "mocha": "./node_modules/.bin/mocha test"
   }
 }

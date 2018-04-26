@@ -1,4 +1,5 @@
-*.min.js
+**/*.browserify.js
+**/*.min.js
 *~
-dist
+bin/files
 node_modules

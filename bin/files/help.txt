@@ -10,3 +10,5 @@ OPTIONS: --tag="{{ }}"                 custom tag delimiter
 
 EXAMPLE: promistache ./templates/*.html > templates.js
          promistache ./templates/*.html --variable=exports --runtime --output=templates.js
+
+SEE:     [[package.homepage]]

@@ -21,15 +21,15 @@ var SRC = {
 CLI(argv(CONF));
 
 function CLI(context) {
-  var compile = Promistache.compileSync;
   var options = {tag: "[[ ]]"};
   var renders = {};
   Object.keys(SRC).forEach(function(key) {
-    renders[key] = compile(SRC[key], options);
+    renders[key] = Promistache.compileSync(SRC[key], options);
   });
 
+  context.package = require("../package.json");
+
   var assets = __dirname + "/files/";
-  var loadHelp = lazyLoader(assets + "help.txt");
   renders.loadAsync = lazyLoader(assets + "runtime.min.js");
   renders.loadSync = lazyLoader(assets + "runtime-sync.min.js");
 
@@ -37,7 +37,8 @@ function CLI(context) {
   var count = args && args.length;
 
   if (!count || context.help) {
-    process.stderr.write(loadHelp());
+    var templates = require("./files/templates");
+    process.stderr.write(templates.help(context, renders));
     process.exit(1);
   }
 
