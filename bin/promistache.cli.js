@@ -5,7 +5,7 @@
 var fs = require("fs");
 var argv = require("process.argv")(process.argv.slice(2));
 
-var Promistache = require("../lib/promistache");
+var Promistache = require("../index");
 
 var CONF = {variable: "templates"};
 var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" --spaces FILES\n';

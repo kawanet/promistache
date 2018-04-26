@@ -5,7 +5,7 @@
 /* jshint unused:false */
 
 var assert = require("assert");
-var runtime = require("../lib/promistache").runtimeSync;
+var runtime = require("../index").runtimeSync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {

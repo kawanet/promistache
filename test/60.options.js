@@ -4,7 +4,7 @@
 
 var fs = require("fs");
 var assert = require("assert");
-var compile = require("../lib/promistache").compileSync;
+var compile = require("../index").compileSync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {

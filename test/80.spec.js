@@ -6,7 +6,7 @@
 
 var assert = require("assert");
 var fs = require("fs");
-var compile = require("../lib/promistache").compileSync;
+var compile = require("../index").compileSync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 var SKIP_NAME = {

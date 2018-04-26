@@ -32,7 +32,7 @@
     "hogan.js"
   ],
   "license": "MIT",
-  "main": "./lib/promistache.js",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kawanet/promistatche.git"

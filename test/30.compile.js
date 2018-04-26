@@ -3,7 +3,7 @@
 "use strict";
 
 var assert = require("assert");
-var compile = require("../lib/promistache").compile;
+var compile = require("../index").compile;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
