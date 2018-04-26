@@ -8,7 +8,7 @@ var argv = require("process.argv")(process.argv.slice(2));
 var Promistache = require("../lib/promistache");
 
 var CONF = {variable: "templates"};
-var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" --trime FILES\n';
+var USAGE = 'USAGE:\t{{cmd}} --variable="templates" --namespace="" --output="templates.js" --spaces FILES\n';
 var PREFIX = 'if (!!!{{variable}}) var {{variable}} = {};\n';
 var LINE = '{{variable}}["{{namespace}}{{name}}"] = function(G,I,P,S,U,V){return {{{code}}};\n';
 var SUFFIX = '';
