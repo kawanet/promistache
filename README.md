@@ -29,44 +29,51 @@ console.log(showHello(context));
 ### CLI Compiler
 
 ```sh
-$ promistache --variable=exports view/names.html > templates.js
+promistache --help
+
+promistache --variable=exports --runtime=sync names.html --output=templates.js
 ```
 
-Asynchronous mode:
+HTML Template:
+
+```html
+<ul>
+  {{#list}}
+  <li>{{name}}</li>
+  {{/list}}
+</ul>
+```
+
+JavaScript:
 
 ```js
 const templates = require("./templates");
-const Promistache = require("promistache");
-
-const showNames = promistache.runtime(templates.names);
 
 const context = {list: [{name: "Ryu"}, {name: "Ken"}]};
 
-showHello(context).then(console.log);
+console.log(templates.names(context));
 ```
 
-Synchronous mode:
+Result:
 
-```js
-const templates = require("./templates");
-const Promistache = require("promistache");
-
-const showNames = promistache.runtimeSync(templates.names);
-
-const context = {list: [{name: "Ryu"}, {name: "Ken"}]};
-
-console.log(showHello(context));
+```html
+<ul>
+  <li>Ryu</li>
+  <li>Ken</li>
+</ul>
 ```
 
 ### Incompatibility
 
-This implementation has some minor changes from the [Mustache spec](https://github.com/mustache/spec).
-Following features are not supported.
+This implementation has some minor changes from the original [Mustache spec](https://github.com/mustache/spec).
+Specs like below are not supported for safe and fast execution.
 
-- Standalone line removal when even empty
-- Tag delimiter switching: `{{= <% %> =}}`
-- Accessible context stack
-- Section lambda: `{{#lambda}}section{{/lambda}}`
+- A lambda's return value should be parsed.
+- A lambda's return value should parse with the default delimiters.
+- All elements on the context stack should be accessible.
+- Each line of the partial should be indented before rendering.
+- Standalone tags should not require a newline to follow them.
+- Standalone tags should not require a newline to precede them.
 
 ### GitHub
 
