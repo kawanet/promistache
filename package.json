@@ -9,10 +9,13 @@
   "bugs": {
     "url": "https://github.com/kawanet/promistatche/issues"
   },
+  "dependencies": {
+    "process.argv": "^0.1.0"
+  },
   "devDependencies": {
+    "browserify": "^16.2.0",
     "jshint": "^2.9.5",
     "mocha": "^5.1.1",
-    "process.argv": "^0.1.0",
     "uglify-js": "^3.3.22"
   },
   "homepage": "https://github.com/kawanet/promistatche#readme",
