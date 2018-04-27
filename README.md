@@ -66,12 +66,17 @@ Result:
 ### Incompatibility
 
 This implementation has some minor changes from the original [Mustache spec](https://github.com/mustache/spec).
-Specs like below are not supported for safe and fast execution.
+Specs like below are not supported for safety or/and better performance.
 
 - A lambda's return value should be parsed.
 - A lambda's return value should parse with the default delimiters.
 - All elements on the context stack should be accessible.
 - Each line of the partial should be indented before rendering.
+- Lambdas used for inverted sections should be considered truthy.
+- Lambdas used for sections should have their results parsed.
+- Lambdas used for sections should not be cached.
+- Lambdas used for sections should parse with the current delimiters.
+- Lambdas used for sections should receive the raw section string.
 - Standalone tags should not require a newline to follow them.
 - Standalone tags should not require a newline to precede them.
 

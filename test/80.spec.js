@@ -18,6 +18,11 @@ var SKIP_DESC = {
   "A lambda's return value should parse with the default delimiters.": 1,
   "All elements on the context stack should be accessible.": 1, // evil
   "Each line of the partial should be indented before rendering.": 1,
+  "Lambdas used for inverted sections should be considered truthy.": 1, // nonsense
+  "Lambdas used for sections should have their results parsed.": 1,
+  "Lambdas used for sections should not be cached.": 1,
+  "Lambdas used for sections should parse with the current delimiters.": 1,
+  "Lambdas used for sections should receive the raw section string.": 1,
   "Standalone tags should not require a newline to follow them.": 1,
   "Standalone tags should not require a newline to precede them.": 1
 };
@@ -47,12 +52,7 @@ describe(TITLE, function() {
         var template = test.template;
         var lambda = context.lambda && context.lambda.js;
 
-        if (SKIP_NAME[name] || SKIP_DESC[desc] ||
-          // delimiter change not supported
-          //template.indexOf("{{=") > -1 ||
-          // this needs parser in runtime
-          (lambda && lambda.indexOf("function(txt)") > -1)) {
-
+        if (SKIP_NAME[name] || SKIP_DESC[desc]) {
           return it.skip(name + ": " + desc);
         }
 
