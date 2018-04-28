@@ -86,7 +86,7 @@ Specs like below are not supported for safety or/and better performance.
 
 ### The MIT License (MIT)
 
-Copyright (c) 2017 Yusuke Kawasaki
+Copyright (c) 2018 Yusuke Kawasaki
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
