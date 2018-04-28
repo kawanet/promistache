@@ -6,7 +6,7 @@ MAIN_SRC=index.js
 MAIN_LIB=lib/*.js
 
 ASYNC_OUT=bin/files/runtime-async.min.js
-ASYNC_SRC=lib/runtime.js
+ASYNC_SRC=lib/runtime-async.js
 
 SYNC_OUT=bin/files/runtime-sync.min.js
 SYNC_SRC=lib/runtime-sync.js

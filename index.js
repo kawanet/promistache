@@ -2,7 +2,7 @@
 
 var parse = exports.parse = require("./lib/parse").parse;
 
-var runtimeAsync = require("./lib/runtime").runtime;
+var runtimeAsync = require("./lib/runtime-async").runtime;
 var runtimeSync = require("./lib/runtime-sync").runtime;
 
 var compileAsync = compile.async = wrap(runtimeAsync);
