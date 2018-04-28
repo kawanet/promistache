@@ -1,13 +1,15 @@
 USAGE:   promistache [OPTIONS] FILES
 
-OPTIONS: --tag="{{ }}"                 custom tag delimiter
-         --output="templates.js"       outputs JavaScript file
+OPTIONS: --help                        shows this message
          --namespace=""                prepend string to template names
-         --variable="exports"          variable name
+         --output="templates.js"       outputs JavaScript file
          --runtime="async"             embeds async runtime
          --runtime="sync"              embeds sync runtime
+         --tag="{{ }}"                 alternates tag delimiter
+         --trim                        removes white spaces
+         --variable="exports"          variable name to export
 
-EXAMPLE: promistache ./templates/*.html > templates.js
-         promistache ./templates/*.html --variable=exports --runtime=sync --output=templates.js
+EXAMPLE: promistache templates.html > templates.js
+         promistache ./templates/*.html --output=templates.js --runtime=sync --trim --variable=exports
 
-SEE:     [[package.homepage]]
+MORE:    [[package.homepage]]

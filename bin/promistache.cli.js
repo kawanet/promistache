@@ -34,6 +34,7 @@ function CLI(context) {
   var args = context["--"];
   var count = args && args.length;
 
+  // --help
   if (!count || context.help) {
     var templates = require("./files/templates");
     process.stderr.write(templates.help(context, renders));
@@ -46,12 +47,19 @@ function CLI(context) {
   args.forEach(function(file) {
     var source = fs.readFileSync(file, "utf-8");
 
+    // --trim
+    if (context.trim) {
+      source = source.replace(/^\s+/mg, "").replace(/\s+\n/g, "\n");
+    }
+
     context.name = file.split("/").pop().split(".").shift();
     context.code = Promistache.parse(source, context);
 
     result.push(renders.line(context));
   });
 
+  // --runtime=async
+  // --runtime=sync
   var runtime = context.runtime;
   if (runtime) {
     var file = __dirname + "/files/runtime-" + runtime + ".min.js";
@@ -63,6 +71,7 @@ function CLI(context) {
 
   var text = result.join("");
 
+  // --output=templates.js
   if (context.output) {
     fs.writeFileSync(context.output, text);
   } else {
