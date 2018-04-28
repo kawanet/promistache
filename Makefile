@@ -20,7 +20,7 @@ ALL=$(ASYNC_OUT) $(SYNC_OUT) $(MAIN_OUT) $(CLI_OUT)
 
 all: $(ALL)
 
-test: all
+test: all fetch-specs
 	./node_modules/.bin/mocha test
 	./node_modules/.bin/jshint .
 	./bin/promistache.cli.js test/sample/*.html --runtime=async | node
@@ -44,5 +44,14 @@ $(MAIN_TMP): $(MAIN_SRC) $(MAIN_LIB)
 
 $(CLI_OUT): $(CLI_SRC) $(SYNC_OUT)
 	./bin/promistache.cli.js --variable=exports --tag="[[ ]]" --runtime=sync $(CLI_SRC) --output=$@
+
+SPECS=comments delimiters interpolation inverted partials sections '~lambdas'
+
+fetch-specs: test/spec/specs/interpolation.json
+
+test/spec/specs/interpolation.json:
+	for spec in $(SPECS); do \
+	curl -o "test/spec/specs/$$spec.json" "https://rawgit.com/mustache/spec/master/specs/$$spec.json"; \
+	done
 
 .PHONY: all clean test
