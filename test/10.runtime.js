@@ -9,7 +9,7 @@ var runtime = require("../index").runtime;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
-  runtime(function(G, I, P, S, U, V) {
+  runtime(function(G, I, S, U, V) {
 
     it("text", function() {
       var t = G("Hello, Promistache!");
@@ -118,7 +118,7 @@ describe(TITLE, function() {
     });
 
     it("partial", function() {
-      var t = G(["[", V("foo"), ":", P("foo"), "]"]);
+      var t = G(["[", V("foo"), ":", U(">foo"), "]"]);
       var context = {foo: "context"};
       var alt = {foo: foo};
 
@@ -135,7 +135,7 @@ describe(TITLE, function() {
     });
 
     it("section and partial", function() {
-      var t = G(["[ ", S("foo", ["[", P("baz"), "]"]), " ]"]);
+      var t = G(["[ ", S("foo", ["[", U(">baz"), "]"]), " ]"]);
       var bar = {};
       var context = {foo: [bar, bar], baz: "context"};
       var alt = {baz: baz};

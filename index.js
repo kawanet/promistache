@@ -18,9 +18,9 @@ function compileSync(source, options) {
 
 /**
  * @private
-   */
+ */
 
 function build(source, options) {
   /*jshint -W061 */
-  return Function("G", "I", "P", "S", "U", "V", "return " + Promistache.parse(source, options));
+  return Function("G", "I", "S", "U", "V", "return " + Promistache.parse(source, options));
 }

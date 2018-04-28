@@ -14,7 +14,7 @@ var SRC = {
   async: 'function(exports){[[>loadAsync]]return exports.runtime;}({})',
   sync: 'function(exports){[[>loadSync]]return exports.runtimeSync;}({})',
   runtime: '\n!function(t){!function(r){Object.keys(t).forEach(function(k){var o=t[k];t[k]=function(c,a){return(t[k]=r(o))(c,a)}})}([[>loadRuntime]])}([[variable]]);\n',
-  line: '[[variable]]["[[namespace]][[name]]"] = function(G,I,P,S,U,V){return [[&code]]};\n',
+  line: '[[variable]]["[[namespace]][[name]]"] = function(G,I,S,U,V){return [[&code]]};\n',
   footer: ''
 };
 
