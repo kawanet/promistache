@@ -1,4 +1,4 @@
-# Promistache - Embeddable {{Mustache}} templating engine [![Build Status](https://travis-ci.org/kawanet/promistatche.svg?branch=master)](https://travis-ci.org/kawanet/promistatche)
+# Promistache - Embeddable {{Mustache}} Templating Engine [![Build Status](https://travis-ci.org/kawanet/promistache.svg?branch=master)](https://travis-ci.org/kawanet/promistache)
 
 - Templates: `{{#section}}` `{{> partial}}` `{{lambda}}` `{{/section}}`
 - Compiler: Precompile a `.js` file for Node.js and Web browsers ready.
