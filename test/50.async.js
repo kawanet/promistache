@@ -3,14 +3,14 @@
 "use strict";
 
 var assert = require("assert");
-var compile = require("../index").compile;
+var compile = require("../index").compileAsync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
 
   it("asynchronous function", function() {
     var step = 1;
-    var render = compile("{{foo}}:{{bar}}:{{buz}}", {async: 1});
+    var render = compile("{{foo}}:{{bar}}:{{buz}}");
     var context = {foo: foo, bar: bar, buz: buz};
 
     assert.equal(++step, 2);
@@ -46,7 +46,7 @@ describe(TITLE, function() {
 
   it("asynchronous section", function() {
     var step = 0;
-    var render = compile("{{#foo}}[{{bar}}]{{/foo}}", {async: 1});
+    var render = compile("{{#foo}}[{{bar}}]{{/foo}}");
     var context = {foo: [{bar: bar1}, {bar: bar2}, {bar: bar3}]};
 
     assert.equal(++step, 1);

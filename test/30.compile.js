@@ -3,7 +3,7 @@
 "use strict";
 
 var assert = require("assert");
-var compile = require("../index").compile.async;
+var compile = require("../index").compileAsync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {

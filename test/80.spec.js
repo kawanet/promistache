@@ -6,7 +6,7 @@
 
 var assert = require("assert");
 var fs = require("fs");
-var compile = require("../index").compile.sync;
+var compile = require("../index").compile;
 var TITLE = __filename.replace(/^.*\//, "");
 
 var ONLY = process.env.ONLY;

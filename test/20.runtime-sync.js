@@ -5,11 +5,11 @@
 /* jshint unused:false */
 
 var assert = require("assert");
-var runtime = require("../index").compile.sync;
+var compile = require("../index").compile;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
-  runtime(function(G, I, S, U, V) {
+  compile(function(G, I, S, U, V) {
 
     it("text", function() {
       var t = G("Hello, Promistache!");

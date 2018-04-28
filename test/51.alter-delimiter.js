@@ -4,7 +4,7 @@
 
 var fs = require("fs");
 var assert = require("assert");
-var compile = require("../index").compile.sync;
+var compile = require("../index").compile;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
