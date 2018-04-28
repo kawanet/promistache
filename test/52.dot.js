@@ -3,20 +3,20 @@
 "use strict";
 
 var assert = require("assert");
-var Promistache = require("../index");
+var compile = require("../index").compile;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
-  describe("compileSync", function() {
-    runTest(Promistache.compileSync);
+  describe("sync", function() {
+    runTest();
   });
 
-  describe("compile", function() {
-    runTest(Promistache.compile);
+  describe("async", function() {
+    runTest({async: 1});
   });
 });
 
-function runTest(compile) {
+function runTest(options) {
   var context = {
     foo: {foo: "FOO", bar: ["B", "A", "R"], buz: "BUZ"},
     qux: "QUX",
@@ -55,7 +55,7 @@ function runTest(compile) {
   function testAsync(template, expected) {
     it(template, function() {
       return Promise.resolve().then(function() {
-        var t = compile(template);
+        var t = compile(template, options);
         return t(context, alt);
       }).then(function(result) {
         assert.equal(result, expected);

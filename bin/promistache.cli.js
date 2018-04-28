@@ -11,9 +11,10 @@ var CONF = {variable: "templates"};
 
 var SRC = {
   header: 'if (!!![[variable]]) var [[variable]] = {};\n',
-  async: 'function(exports){[[>loadAsync]]return exports.runtime;}({})',
-  sync: 'function(exports){[[>loadSync]]return exports.runtimeSync;}({})',
-  runtime: '\n!function(t){!function(r){Object.keys(t).forEach(function(k){var o=t[k];t[k]=function(c,a){return(t[k]=r(o))(c,a)}})}([[>loadRuntime]])}([[variable]]);\n',
+  runtime: '\n!function(r,t){' +
+  '!function(exports){[[>loadRuntime]]}(r);' +
+  'Object.keys(t).forEach(function(k){var o=t[k];t[k]=function(c,a){return(t[k]=r.runtime(o))(c,a)}})' +
+  '}({},[[variable]]);\n',
   line: '[[variable]]["[[namespace]][[name]]"] = function(G,I,S,U,V){return [[&code]]};\n',
   footer: ''
 };
@@ -23,15 +24,12 @@ CLI(argv(CONF));
 function CLI(context) {
   var options = {tag: "[[ ]]"};
   var renders = {};
+
   Object.keys(SRC).forEach(function(key) {
-    renders[key] = Promistache.compileSync(SRC[key], options);
+    renders[key] = Promistache.compile(SRC[key], options);
   });
 
   context.package = require("../package.json");
-
-  var assets = __dirname + "/files/";
-  renders.loadAsync = lazyLoader(assets + "runtime.min.js");
-  renders.loadSync = lazyLoader(assets + "runtime-sync.min.js");
 
   var args = context["--"];
   var count = args && args.length;
@@ -54,10 +52,10 @@ function CLI(context) {
     result.push(renders.line(context));
   });
 
-
   var runtime = context.runtime;
   if (runtime) {
-    renders.loadRuntime = (runtime === "sync") ? renders.sync : renders.async;
+    var file = __dirname + "/files/runtime-" + runtime + ".min.js";
+    renders.loadRuntime = lazyLoader(file);
     result.push(renders.runtime(context, renders));
   }
 

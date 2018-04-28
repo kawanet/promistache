@@ -10,11 +10,11 @@ describe(TITLE, function() {
 
   it("asynchronous function", function() {
     var step = 1;
-    var render = compile("{{foo}}:{{bar}}:{{buz}}");
+    var render = compile("{{foo}}:{{bar}}:{{buz}}", {async: 1});
     var context = {foo: foo, bar: bar, buz: buz};
 
     assert.equal(++step, 2);
-    return render(context).then(function(result) {
+    return Promise.resolve(context).then(render).then(function(result) {
       assert.equal(++step, 9);
       assert.equal(result, "FOO:BAR:BUZ");
     });
@@ -46,11 +46,11 @@ describe(TITLE, function() {
 
   it("asynchronous section", function() {
     var step = 0;
-    var render = compile("{{#foo}}[{{bar}}]{{/foo}}");
+    var render = compile("{{#foo}}[{{bar}}]{{/foo}}", {async: 1});
     var context = {foo: [{bar: bar1}, {bar: bar2}, {bar: bar3}]};
 
     assert.equal(++step, 1);
-    return render(context).then(function(result) {
+    return Promise.resolve(context).then(render).then(function(result) {
       assert.equal(++step, 8);
       assert.equal(result, "[bar1][bar2][bar3]");
     });

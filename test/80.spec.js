@@ -6,7 +6,7 @@
 
 var assert = require("assert");
 var fs = require("fs");
-var compile = require("../index").compileSync;
+var compile = require("../index").compile.sync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 var SKIP_NAME = {
@@ -76,8 +76,11 @@ describe(TITLE, function() {
             context.lambda = (Function("return " + lambda)());
           }
 
-          var result = t(context, partial);
-          assert.equal(result, test.expected, desc);
+          return Promise.resolve().then(function() {
+            return t(context, partial);
+          }).then(function(result) {
+            assert.equal(result, test.expected, desc);
+          });
         });
       });
     });

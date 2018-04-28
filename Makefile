@@ -5,7 +5,7 @@ MAIN_TMP=dist/promistache.browserify.js
 MAIN_SRC=index.js
 MAIN_LIB=lib/*.js
 
-ASYNC_OUT=bin/files/runtime.min.js
+ASYNC_OUT=bin/files/runtime-async.min.js
 ASYNC_SRC=lib/runtime.js
 
 SYNC_OUT=bin/files/runtime-sync.min.js
@@ -23,7 +23,8 @@ all: $(ALL)
 test: all
 	./node_modules/.bin/mocha test
 	./node_modules/.bin/jshint .
-	./bin/promistache.cli.js test/sample/*.html --runtime > /dev/null
+	./bin/promistache.cli.js test/sample/*.html --runtime=async | node
+	./bin/promistache.cli.js test/sample/*.html --runtime=sync | node
 	./bin/promistache.cli.js --help 2>&1 | grep github.com > /dev/null
 
 clean:

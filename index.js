@@ -1,26 +1,31 @@
 "use strict";
 
-var Promistache = exports;
+var parse = exports.parse = require("./lib/parse").parse;
 
-Promistache.compile = compile;
-Promistache.compileSync = compileSync;
-Promistache.parse = require("./lib/parse").parse;
-Promistache.runtime = require("./lib/runtime").runtime;
-Promistache.runtimeSync = require("./lib/runtime-sync").runtimeSync;
+var runtimeAsync = require("./lib/runtime").runtime;
+var runtimeSync = require("./lib/runtime-sync").runtime;
+
+var compileAsync = compile.async = wrap(runtimeAsync);
+var compileSync = compile.sync = wrap(runtimeSync);
+
+exports.compile = compile;
 
 function compile(source, options) {
-  return Promistache.runtime(build(source, options));
-}
-
-function compileSync(source, options) {
-  return Promistache.runtimeSync(build(source, options));
+  return (options && options.async ? compileAsync : compileSync)(source, options);
 }
 
 /**
  * @private
  */
 
-function build(source, options) {
-  /*jshint -W061 */
-  return Function("G", "I", "S", "U", "V", "return " + Promistache.parse(source, options));
+function wrap(runtime) {
+  return function(source, options) {
+
+    if ("function" !== typeof source) {
+      /*jshint -W061 */
+      source = Function("G", "I", "S", "U", "V", "return " + parse(source, options));
+    }
+
+    return runtime(source);
+  };
 }

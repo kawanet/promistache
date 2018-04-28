@@ -7,11 +7,14 @@ Asynchronous mode:
 ```js
 const Promistache = require("promistache");
 
-const showHello = Promistache.compile("hello, {{name}}");
+const template = "hello, {{name}}!";
+
+const render = Promistache.compile(template, {async: 1});
+// OR        = Promistache.compile.async(template);
 
 const context = {name: "Ryu"};
 
-showHello(context).then(console.log);
+render(context).then(console.log); // => "Hello, Ryu!"
 ```
 
 Synchronous mode:
@@ -19,11 +22,14 @@ Synchronous mode:
 ```js
 const Promistache = require("promistache");
 
-const showHello = Promistache.compileSync("hello, {{name}}");
+const template = "hello, {{name}}!";
+
+const render = Promistache.compile(template);
+// OR        = Promistache.compile.sync(template);
 
 const context = {name: "Ryu"};
 
-console.log(showHello(context));
+console.log(render(context)); // => "Hello, Ryu!"
 ```
 
 ### CLI Compiler

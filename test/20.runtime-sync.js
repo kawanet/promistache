@@ -5,7 +5,7 @@
 /* jshint unused:false */
 
 var assert = require("assert");
-var runtime = require("../index").runtimeSync;
+var runtime = require("../index").compile.sync;
 var TITLE = __filename.replace(/^.*\//, "");
 
 describe(TITLE, function() {
