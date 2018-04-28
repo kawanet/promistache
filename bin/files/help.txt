@@ -6,7 +6,6 @@ OPTIONS: --tag="{{ }}"                 custom tag delimiter
          --variable="exports"          variable name
          --runtime="async"             embeds async runtime
          --runtime="sync"              embeds sync runtime
-         --spaces                      preserves white spaces
 
 EXAMPLE: promistache ./templates/*.html > templates.js
          promistache ./templates/*.html --variable=exports --runtime=sync --output=templates.js

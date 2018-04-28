@@ -94,8 +94,8 @@ describe(TITLE, function() {
   });
 
   it("comment", function() {
-    var t = compile("[{{! foo \n bar }}]");
+    var t = compile("[{{! foo }}][{{! foo \n bar }}][{{! bar }}]");
 
-    assert.equal(t(), "[]");
+    assert.equal(t(), "[][][]");
   });
 });

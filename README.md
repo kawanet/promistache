@@ -83,8 +83,6 @@ Specs like below are not supported for safety or/and better performance.
 - Lambdas used for sections should not be cached.
 - Lambdas used for sections should parse with the current delimiters.
 - Lambdas used for sections should receive the raw section string.
-- Standalone tags should not require a newline to follow them.
-- Standalone tags should not require a newline to precede them.
 
 ### GitHub
 

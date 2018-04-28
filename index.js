@@ -23,7 +23,8 @@ function wrap(runtime) {
 
     if ("function" !== typeof source) {
       /*jshint -W061 */
-      source = Function("G", "I", "S", "U", "V", "return " + parse(source, options));
+      var js = parse(source, options);
+      source = Function("G", "I", "S", "U", "V", "return " + js);
     }
 
     return runtime(source);

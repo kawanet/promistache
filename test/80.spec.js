@@ -9,6 +9,8 @@ var fs = require("fs");
 var compile = require("../index").compile.sync;
 var TITLE = __filename.replace(/^.*\//, "");
 
+var ONLY = process.env.ONLY;
+
 var SKIP_NAME = {
   //
 };
@@ -22,9 +24,7 @@ var SKIP_DESC = {
   "Lambdas used for sections should have their results parsed.": 1,
   "Lambdas used for sections should not be cached.": 1,
   "Lambdas used for sections should parse with the current delimiters.": 1,
-  "Lambdas used for sections should receive the raw section string.": 1,
-  "Standalone tags should not require a newline to follow them.": 1,
-  "Standalone tags should not require a newline to precede them.": 1
+  "Lambdas used for sections should receive the raw section string.": 1
 };
 
 describe(TITLE, function() {
@@ -52,7 +52,11 @@ describe(TITLE, function() {
         var template = test.template;
         var lambda = context.lambda && context.lambda.js;
 
-        if (SKIP_NAME[name] || SKIP_DESC[desc]) {
+        if (ONLY && name.indexOf(ONLY) < 0 && desc.indexOf(ONLY) < 0) return;
+
+        var partialHasIndent = (template.search(/^[ \t]+{{>/m) > -1);
+
+        if (SKIP_NAME[name] || SKIP_DESC[desc] || partialHasIndent) {
           return it.skip(name + ": " + desc);
         }
 
