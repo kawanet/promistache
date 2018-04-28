@@ -1,4 +1,9 @@
-# Promistache - Promise-based asynchronous Mustache-like templating engine
+# Promistache - Embeddable {{Mustache}} templating engine
+
+- Templates: `{{#section}}` `{{> partial}}` `{{lambda}}` `{{/section}}`
+- Compiler: Precompile a `.js` file for Node.js and Web browsers ready.
+- Render: Pair of synchronous render and Promise-based asynchronous render.
+- Embeddable: Tiny 1KB runtime. No dependency modules required when rendering.
 
 ## Synopsis
 
@@ -9,8 +14,7 @@ const Promistache = require("promistache");
 
 const template = "hello, {{name}}!";
 
-const render = Promistache.compile(template, {async: 1});
-// OR        = Promistache.compile.async(template);
+const render = Promistache.compileAsync(template);
 
 const context = {name: "Ryu"};
 
@@ -25,22 +29,21 @@ const Promistache = require("promistache");
 const template = "hello, {{name}}!";
 
 const render = Promistache.compile(template);
-// OR        = Promistache.compile.sync(template);
 
 const context = {name: "Ryu"};
 
 console.log(render(context)); // => "Hello, Ryu!"
 ```
 
-### CLI Compiler
+## CLI Compiler
 
 ```sh
 promistache --help
 
-promistache --variable=exports --runtime=sync names.html --output=templates.js
+promistache --variable=exports --runtime=sync *.html --output=templates.js
 ```
 
-HTML Template:
+HTML Template: `names.html`
 
 ```html
 <ul>
@@ -50,7 +53,7 @@ HTML Template:
 </ul>
 ```
 
-JavaScript:
+Node.js:
 
 ```js
 const templates = require("./templates");
@@ -58,6 +61,16 @@ const templates = require("./templates");
 const context = {list: [{name: "Ryu"}, {name: "Ken"}]};
 
 console.log(templates.names(context));
+```
+
+Browser:
+
+```html
+<script src="./templates.js"></script>
+<script>
+    const context = {list: [{name: "Ryu"}, {name: "Ken"}]};
+    document.body.innerHTML = exports.sample1(context);
+</script>
 ```
 
 Result:
@@ -69,19 +82,79 @@ Result:
 </ul>
 ```
 
+## Templating Syntax
+
+The compiled render method accepts a pair of arguments: the main (current) context and the alt (fallback) context.
+
+```
+const Promistache = require("promistache");
+const Promistache = require("./");
+
+const template = "{{foo}}-{{.foo}}-{{>foo}} {{bar}}-{{.bar}}-{{>bar}}";
+
+const context = { foo: "[FOO]" };
+const alt = { foo: "[foo]", bar: "[bar]" };
+
+const render = Promistache.compile(template);
+
+console.log(render(context, alt)); // => "[FOO]-[FOO]-[foo] [bar]--[bar]"
+```
+
+Interpolation:
+
+| Prefix | Behavior | Example | main context | alt context  | HTML escape |
+| --- | --- | --- | --- | --- | --- |
+| - | Normal | `{{foo.bar}}` | Yes (primary) | Yes (fallback) | Escaped |
+| `&` | Unescaped | `{{&foo.bar}}` | Yes (primary) | Yes (fallback) | Raw |
+| `.` | Main only | `{{.foo.bar}}` | Yes | No | Escaped |
+| `>` | Alt only | `{{>foo.bar}}` | No | Yes | Raw |
+
+Section:
+
+```
+{{# section }} show this when true {{/ section }}
+
+{{^ inverted }} show this when false {{/ inverted }}
+```
+
+Comment: (just ignored)
+
+```
+{{! comment }}
+```
+
+Triple Mustache: (rendering without HTML escaping)
+
+```
+{{{ foo.bar }}}
+
+{{& foo.bar }} // same
+```
+
+Patial: (as a lambda stored in the alt context)
+
+```
+{{> partial }}
+```
+
+Altering Delimiter: (tag switching)
+
+```
+{{= <% %> =}}
+
+<%# section %> <% foo.bar %> <%/ section %>
+```
+
 ### Incompatibility
 
-This implementation has some minor changes from the original [Mustache spec](https://github.com/mustache/spec).
-Specs like below are not supported for safety or/and better performance.
+It passes 91% of the original [Mustache spec](https://github.com/mustache/spec) test suite.
+9% of tests are skipped in due to changes made for security or performance reasons.
+The following minor features are not supported by the module.
 
 - A lambda's return value should be parsed.
-- A lambda's return value should parse with the default delimiters.
 - All elements on the context stack should be accessible.
 - Each line of the partial should be indented before rendering.
 - Lambdas used for inverted sections should be considered truthy.
-- Lambdas used for sections should have their results parsed.
-- Lambdas used for sections should not be cached.
-- Lambdas used for sections should parse with the current delimiters.
 - Lambdas used for sections should receive the raw section string.
 
 ### GitHub
