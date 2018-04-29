@@ -45,6 +45,7 @@
     "fixpack": "fixpack",
     "jshint": "./node_modules/.bin/jshint .",
     "mocha": "./node_modules/.bin/mocha test",
-    "test": "make test"
+    "test": "make test",
+    "watch": "make watch"
   }
 }

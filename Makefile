@@ -54,4 +54,18 @@ test/spec/specs/interpolation.json:
 	curl -o "test/spec/specs/$$spec.json" "https://rawgit.com/mustache/spec/master/specs/$$spec.json"; \
 	done
 
+mocha:
+	./node_modules/.bin/mocha test
+
+jshint:
+	./node_modules/.bin/jshint .
+
+watch:
+	while :; do make watching; sleep 1; done
+
+watching: test/.watching
+
+test/.watching: $(MAIN_SRC) $(MAIN_LIB)
+	make mocha jshint all && touch test/.watching
+
 .PHONY: all clean test
