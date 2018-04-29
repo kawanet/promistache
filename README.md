@@ -88,7 +88,6 @@ The compiled render method accepts a pair of arguments: the main (current) conte
 
 ```
 const Promistache = require("promistache");
-const Promistache = require("./");
 
 const template = "{{foo}}-{{.foo}}-{{>foo}} {{bar}}-{{.bar}}-{{>bar}}";
 
@@ -102,7 +101,7 @@ console.log(render(context, alt)); // => "[FOO]-[FOO]-[foo] [bar]--[bar]"
 
 Interpolation:
 
-| Prefix | Behavior | Example | main context | alt context  | HTML escape |
+| Prefix | Behavior | Example | Main context | Alt context  | HTML escape |
 | --- | --- | --- | --- | --- | --- |
 | - | Normal | `{{foo.bar}}` | Yes (primary) | Yes (fallback) | Escaped |
 | `&` | Unescaped | `{{&foo.bar}}` | Yes (primary) | Yes (fallback) | Raw |
@@ -123,7 +122,7 @@ Comment: (just ignored)
 {{! comment }}
 ```
 
-Triple Mustache: (rendering without HTML escaping)
+Triple Mustache: (rendered without HTML escaping)
 
 ```
 {{{ foo.bar }}}
@@ -145,10 +144,10 @@ Altering Delimiter: (tag switching)
 <%# section %> <% foo.bar %> <%/ section %>
 ```
 
-### Incompatibility
+## Incompatibility
 
-It passes 91% of the original [Mustache spec](https://github.com/mustache/spec) test suite.
-9% of tests are skipped in due to changes made for security or performance reasons.
+It passes more than 90% of the original [Mustache spec](https://github.com/mustache/spec) test suite.
+The rest of the tests are skipped in due to changes made for security or performance reasons.
 The following minor features are not supported by the module.
 
 - A lambda's return value should be parsed.
