@@ -51,7 +51,7 @@ fetch-specs: test/spec/specs/interpolation.json
 
 test/spec/specs/interpolation.json:
 	for spec in $(SPECS); do \
-	curl -o "test/spec/specs/$$spec.json" "https://rawgit.com/mustache/spec/master/specs/$$spec.json"; \
+	curl -o "test/spec/specs/$$spec.json" "https://raw.githubusercontent.com/mustache/spec/master/specs/$$spec.json"; \
 	done
 
 mocha:
