@@ -31,13 +31,13 @@ clean:
 	/bin/rm -f $(ALL)
 
 $(ASYNC_OUT): $(ASYNC_SRC)
-	./node_modules/.bin/uglifyjs -c -m -o $@ $<
+	./node_modules/.bin/terser -c -m -o $@ $<
 
 $(SYNC_OUT): $(SYNC_SRC)
-	./node_modules/.bin/uglifyjs -c -m -o $@ $<
+	./node_modules/.bin/terser -c -m -o $@ $<
 
 $(MAIN_OUT): $(MAIN_TMP)
-	./node_modules/.bin/uglifyjs -c -m -o $@ $<
+	./node_modules/.bin/terser -c -m -o $@ $<
 
 $(MAIN_TMP): $(MAIN_SRC) $(MAIN_LIB)
 	./node_modules/.bin/browserify $(MAIN_SRC) -s $(CLASS) -o $@ --debug
