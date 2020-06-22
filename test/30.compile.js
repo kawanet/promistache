@@ -143,4 +143,13 @@ describe(TITLE, function() {
       });
     });
   });
+
+  it("falsy values", function() {
+    var t = compile("[{{ zero }}][{{ null }}][{{ undef }}][{{ false }}]");
+    var c = {"zero": 0, "null": null, "false": false};
+
+    return t(c).then(function(result) {
+      assert.equal(result, "[0][][][false]");
+    });
+  });
 });

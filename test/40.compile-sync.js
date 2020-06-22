@@ -98,4 +98,11 @@ describe(TITLE, function() {
 
     assert.equal(t(), "[][][]");
   });
+
+  it("falsy values", function() {
+    var t = compile("[{{ zero }}][{{ null }}][{{ undef }}][{{ false }}]");
+    var c = {"zero": 0, "null": null, "false": false};
+
+    assert.equal(t(c), "[0][][][false]");
+  });
 });
