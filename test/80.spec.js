@@ -19,12 +19,14 @@ var SKIP_DESC = {
   "A lambda's return value should be parsed.": 1, // evil
   "A lambda's return value should parse with the default delimiters.": 1,
   "All elements on the context stack should be accessible.": 1, // evil
-  "Each line of the partial should be indented before rendering.": 1,
+  "All elements on the context stack should be accessible within lists.": 1,
   "Lambdas used for inverted sections should be considered truthy.": 1, // nonsense
   "Lambdas used for sections should have their results parsed.": 1,
   "Lambdas used for sections should not be cached.": 1,
   "Lambdas used for sections should parse with the current delimiters.": 1,
-  "Lambdas used for sections should receive the raw section string.": 1
+  "Lambdas used for sections should receive the raw section string.": 1,
+  "Names missing in the current context are looked up in the stack.": 1,
+  "Non-false sections have their value at the top of context,\naccessible as {{.}} or through the parent context. This gives\na simple way to display content conditionally if a variable exists.\n": 1
 };
 
 describe(TITLE, function() {
